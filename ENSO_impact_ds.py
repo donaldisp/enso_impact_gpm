@@ -6,7 +6,7 @@ Created on Sat Oct 17 12:03:02 2020
 GAW Palu BMKG
 donaldi.permana@bmkg.go.id
 """
-# from matplotlib.cbook import dedent
+
 from mpl_toolkits.basemap import Basemap, maskoceans
 import xarray as xr
 # import cartopy.crs as ccrs
@@ -22,14 +22,15 @@ import shapely.geometry
 from matplotlib.collections import PatchCollection
 from matplotlib.patches import Polygon
 
-shpkabkotfilename = 'C:\\Users\\ASUS\\Desktop\\ENSO_PRECIPITATION\\shp\\Indo_Kab_Kot1'
-shpprovfilename = 'C:\\Users\\ASUS\\Desktop\\ENSO_PRECIPITATION\\shp\\INDONESIA_PROP1'
+shpkabkotfilename = 'G:\\DATA\\BMKG\\2018_BMKG\\12\\backup\\pyscript\\shp\\Indo_Kab_Kot1'
+shpprovfilename = 'G:\\DATA\\BMKG\\2018_BMKG\\12\\backup\\pyscript\\shp\\INDONESIA_PROP1'
 # shpoceanfilename = 'G:\\DATA\\BMKG\\2018_BMKG\\12\\backup\\pyscript\\shp\\ne_10m_ocean'
 # nclandseamaskfile = 'G:\\DATA\\BMKG\\2018_BMKG\\12\\backup\\pyscript\\shp\\lsmask.oisst.v2.nc'
-# bmkglogo = 'G:\\DATA\\BMKG\\2018_BMKG\\12\\backup\\pyscript\\BMKG.png'
+bmkglogo = 'G:\\DATA\\BMKG\\2018_BMKG\\12\\backup\\pyscript\\BMKG.png'
 
-dirin = 'C:\\Users\\ASUS\\Desktop\\ENSO_PRECIPITATION\\IDN\\'
-dirout = 'C:\\Users\\ASUS\\Desktop\\ENSO_PRECIPITATION\\'
+dirin = 'G:\\DATA\BMKG\\2018_BMKG\\07\APCC_YSSP_2018\\2018_YSSP\\' + \
+        'APCC_Desktop\\2018_YSSP\\Grid_Observation\\GPM-IMERGV06\\IDN\\'
+dirout = 'G:\\DATA\\BMKG\\2020_BMKG_GAW\\10\\20_PressReleaseBMKGSulteng_LaNina\\'
 
 oniidx = pd.read_csv(dirout+'onidata.csv')  # 1950 - 2020
 nino34idx = pd.read_csv(dirout+'nino34data.csv') # 1950 - 2020 
@@ -72,7 +73,7 @@ ds_elnino = xr.open_mfdataset(elnino_filename) # multiple files
 monthly_sum = ds.resample(time='MS').sum()
 monthly_ave = monthly_sum.groupby('time.month').mean('time')
 monthly_anom = monthly_sum.groupby('time.month') - monthly_ave # anomaly by removing seasonality
-month, lons, lats  = monthly_anom.indexes.values()
+lons, lats, month = monthly_anom.indexes.values()
 # convert Dataset to Array
 month_sum = monthly_sum.precipitation.values
 month_ave = monthly_ave.precipitation.values
